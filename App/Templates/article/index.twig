@@ -1,0 +1,22 @@
+{# index.twig #}
+{% extends "layout.twig" %}
+
+{% block title %} Главная {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    {% if articles %}
+        {% for article in articles %}
+            <b>Номер новости:</b><a href="/article/one/?id={{ article.id }}">{{ article.id }}</a><br>
+            <b>Название:</b>{{ article.title }}<br>
+            {% if article.author.name %}
+                <b>Автор:</b>{{ article.author.name }}<br>
+            {% else %}
+                <td>Автора нет</td><br>
+            {% endif %}
+            <b>Содержание:</b><p>{{ article.lead }}</p><br>
+            <br><br><br><br><br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
