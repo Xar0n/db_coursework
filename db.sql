@@ -1,80 +1,64 @@
--- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
---
--- Хост: 127.0.0.1:3306
--- Время создания: Ноя 02 2017 г., 15:04
--- Версия сервера: 5.7.16
--- Версия PHP: 7.1.0
+CREATE TABLE `aviakompaniya` (
+	`shifr` INT(20) NOT NULL AUTO_INCREMENT,
+	`nazvanie` varchar(255) NOT NULL UNIQUE,
+	`naselennyj_punkt` varchar(255) NOT NULL,
+	`ulica` varchar(255) NOT NULL,
+	`nomer_doma` varchar(255) NOT NULL,
+	`ofis` varchar(255) NOT NULL,
+	PRIMARY KEY (`shifr`)
+);
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE TABLE `kassa` (
+	`nomer` INT(20) NOT NULL AUTO_INCREMENT,
+	`naselennyj_punkt` varchar(255) NOT NULL,
+	`ulica` varchar(255) NOT NULL,
+	`nomer_doma` varchar(255) NOT NULL,
+	PRIMARY KEY (`nomer`)
+);
 
+CREATE TABLE `klient` (
+	`nomer_i_seriya_pasporta` varchar(10) NOT NULL,
+	`familiya` varchar(255) NOT NULL,
+	`imya` varchar(255) NOT NULL,
+	`otchestvo` varchar(255) NOT NULL,
+	PRIMARY KEY (`nomer_i_seriya_pasporta`)
+);
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE `bilet` (
+	`nomer` INT(20) NOT NULL AUTO_INCREMENT,
+	`shifr_aviakompanii` INT(20) NOT NULL,
+	`nomer_kassy` INT(20) NOT NULL,
+	`tabelnyj_nomer_kassira` INT(20) NOT NULL,
+	`tip` varchar(255) NOT NULL,
+	`data_prodazhi` DATE NOT NULL,
+	PRIMARY KEY (`nomer`)
+);
 
---
--- База данных: `php2`
---
+CREATE TABLE `kupon` (
+	`nomer` INT(20) NOT NULL AUTO_INCREMENT,
+	`nomer_bileta` INT(20) NOT NULL,
+	`nomer_i_seriya_pasporta_klienta` varchar(10) NOT NULL,
+	`nunkt_posadki` varchar(255) NOT NULL,
+	`nunkt_vysadki` varchar(255) NOT NULL,
+	`tarif` INT(10) NOT NULL,
+	PRIMARY KEY (`nomer`)
+);
 
--- --------------------------------------------------------
+CREATE TABLE `kassir` (
+	`tabelnyj_nomer` INT(20) NOT NULL AUTO_INCREMENT,
+	`familiya` varchar(255) NOT NULL,
+	`imya` varchar(255) NOT NULL,
+	`otchestvo` varchar(255) NOT NULL,
+	PRIMARY KEY (`tabelnyj_nomer`)
+);
 
---
--- Структура таблицы `articles`
---
+ALTER TABLE `bilet` ADD CONSTRAINT `bilet_fk0` FOREIGN KEY (`shifr_aviakompanii`) REFERENCES `aviakompaniya`(`shifr`);
 
-CREATE TABLE `articles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(1024) DEFAULT NULL,
-  `lead` text,
-  `author_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `bilet` ADD CONSTRAINT `bilet_fk1` FOREIGN KEY (`nomer_kassy`) REFERENCES `kassa`(`nomer`);
 
--- --------------------------------------------------------
+ALTER TABLE `bilet` ADD CONSTRAINT `bilet_fk2` FOREIGN KEY (`tabelnyj_nomer_kassira`) REFERENCES `kassir`(`tabelnyj_nomer`);
 
---
--- Структура таблицы `authors`
---
+ALTER TABLE `kupon` ADD CONSTRAINT `kupon_fk0` FOREIGN KEY (`nomer_bileta`) REFERENCES `bilet`(`nomer`);
 
-CREATE TABLE `authors` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(1024) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `kupon` ADD CONSTRAINT `kupon_fk1` FOREIGN KEY (`nomer_i_seriya_pasporta_klienta`) REFERENCES `klient`(`nomer_i_seriya_pasporta`);
 
---
--- Индексы сохранённых таблиц
---
-
---
--- Индексы таблицы `articles`
---
-ALTER TABLE `articles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
-
---
--- Индексы таблицы `authors`
---
-ALTER TABLE `authors`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT для сохранённых таблиц
---
-
---
--- AUTO_INCREMENT для таблицы `articles`
---
-ALTER TABLE `articles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
---
--- AUTO_INCREMENT для таблицы `authors`
---
-ALTER TABLE `authors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

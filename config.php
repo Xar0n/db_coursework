@@ -3,8 +3,8 @@
 return [
 	'db' => [
 		'host' => 'localhost',
-		'database' => 'php2',
+		'database' => 'ticket',
 		'user' => 'root',
-		'password' => '',
+		'password' => 'root',
 	]
 ];

@@ -10,7 +10,7 @@ use App\Exceptions\Http\{
 
 $urlParts = explode('/', $_SERVER['REQUEST_URI']);
 $ctrl = !empty($urlParts[1]) ? ucfirst($urlParts[1]) . 'Controller' :
-	'ArticleController';
+	'GeneralController';
 $action = !empty($urlParts[2]) ? $urlParts[2] : 'index';
 
 try {
