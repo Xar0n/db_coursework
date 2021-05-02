@@ -4,20 +4,14 @@
 namespace App\Controllers;
 
 
-use App\Controller;
+use App\ControllerTwig;
 use App\Exceptions\Http\Http404Exception;
-
 use App\Exceptions\Model\ItemNotFoundException;
 use App\Models\Kassa;
-use App\Views\Twig;
 
-class KassaController extends Controller
+
+class KassaController extends ControllerTwig
 {
-    public function __construct()
-    {
-        $this->view = new Twig;
-    }
-
     protected function actionIndex()
     {
         $kassas = Kassa::findAll();

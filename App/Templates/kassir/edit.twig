@@ -1,0 +1,29 @@
+{# edit.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Редактирование {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actKassir %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Редактировать кассира</h1>
+        </div>
+        <form method="post">
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Фамилия</label>
+                <input type="text" name="familiya" class="form-control" id="exampleFormControlInput1" value="{{ kassir.familiya }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Имя</label>
+                <input type="text" name="imya" class="form-control" id="exampleFormControlInput1" value="{{ kassir.imya }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Отчество</label>
+                <input type="text" name="otchestvo" class="form-control" id="exampleFormControlInput1" value="{{ kassir.otchestvo }}" required min="1" max="255">
+            </div>
+            <button type="input" name="save" class="btn btn-primary">Редактировать</button>
+        </form>
+    </main>
+{% endblock %}

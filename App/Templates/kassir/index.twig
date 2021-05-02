@@ -1,17 +1,17 @@
 {# index.twig #}
 {% extends "layoutMain.twig" %}
-{% block title %} Кассы {% endblock %}
+{% block title %} Кассиры {% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
-{% block actKassa %}active{% endblock %}
+{% block actKassir %}active{% endblock %}
 {% block content %}
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Кассы</h1>
+            <h1 class="h2">Кассиры</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a type="button" class="btn btn-sm btn-primary" href="/kassa/add">Добавить</a>
+                    <a type="button" class="btn btn-sm btn-primary" href="/kassir/add">Добавить</a>
                 </div>
             </div>
         </div>
@@ -19,27 +19,27 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th>Номер</th>
-                    <th>Населенный пункт</th>
-                    <th>Улица</th>
-                    <th>Номер дома</th>
+                    <th>Табельный номер</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% if kassas %}
-                    {% for kassa in kassas%}
+                {% if kassirs %}
+                    {% for kassir in kassirs%}
                         <tr>
-                            <td>{{ kassa.id }}</td>
-                            <td>{{ kassa.naselennyj_punkt }}</td>
-                            <td>{{ kassa.ulica }}</td>
-                            <td>{{ kassa.nomer_doma }}</td>
+                            <td>{{ kassir.id }}</td>
+                            <td>{{ kassir.familiya }}</td>
+                            <td>{{ kassir.imya }}</td>
+                            <td>{{ kassir.otchestvo }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a class="nav-link" href="/kassa/edit/?id={{ kassa.id }}">
+                                    <a class="nav-link" href="/kassir/edit/?id={{ kassir.id }}">
                                         <span data-feather="edit"></span>
                                     </a>
-                                    <a class="nav-link" href="/kassa/delete/?id={{ kassa.id }}">
+                                    <a class="nav-link" href="/kassir/delete/?id={{ kassir.id }}">
                                         <span data-feather="x-square"></span>
                                     </a>
                                 </div>
