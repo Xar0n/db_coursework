@@ -1,0 +1,58 @@
+{# index.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Авиакомпании {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actAviakompaniya %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Авиакомпании</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    <a type="button" class="btn btn-sm btn-primary" href="/aviakompaniya/add">Добавить</a>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>Шифр</th>
+                    <th>Название</th>
+                    <th>Населенный пункт</th>
+                    <th>Улица</th>
+                    <th>Номер дома</th>
+                    <th>Офис</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if aviakompaniyas %}
+                    {% for aviakompaniya in aviakompaniyas %}
+                        <tr>
+                            <td>{{ aviakompaniya.id }}
+                            <td>{{ aviakompaniya.nazvanie }}</td>
+                            <td>{{ aviakompaniya.naselennyj_punkt }}</td>
+                            <td>{{ aviakompaniya.ulica }}</td>
+                            <td>{{ aviakompaniya.nomer_doma }}</td>
+                            <td>{{ aviakompaniya.ofis }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="nav-link" href="/aviakompaniya/edit/?id={{ aviakompaniya.id }}">
+                                        <span data-feather="edit"></span>
+                                    </a>
+                                    <a class="nav-link" href="/aviakompaniya/delete/?id={{ aviakompaniya.id }}">
+                                        <span data-feather="x-square"></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}

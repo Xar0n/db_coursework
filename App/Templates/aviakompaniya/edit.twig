@@ -1,0 +1,37 @@
+{# edit.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Редактирование {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actAviakompaniya %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Редактировать авиакомпанию</h1>
+        </div>
+        <form method="post">
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Название</label>
+                <input type="text" name="nazvanie" class="form-control" id="exampleFormControlInput1" value="{{ aviakompaniya.nazvanie }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Населенный пункт</label>
+                <input type="text" name="naselennyj_punkt" class="form-control" id="exampleFormControlInput1" value="{{ aviakompaniya.naselennyj_punkt }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Улица</label>
+                <input type="text" name="ulica" class="form-control" id="exampleFormControlInput1" value="{{ aviakompaniya.ulica }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Номер дома</label>
+                <input type="text" name="nomer_doma" class="form-control" id="exampleFormControlInput1" value="{{ aviakompaniya.nomer_doma }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Офис</label>
+                <input type="text" name="ofis" class="form-control" id="exampleFormControlInput1" value="{{ aviakompaniya.ofis }}" required min="1" max="255">
+            </div>
+            <button type="input" name="save" class="btn btn-primary">Редактировать</button>
+        </form>
+    </main>
+{% endblock %}
