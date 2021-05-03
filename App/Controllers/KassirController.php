@@ -7,6 +7,7 @@ use App\ControllerTwig;
 use App\Exceptions\Http\Http404Exception;
 use App\Exceptions\Http\Http415Exception;
 use App\Exceptions\Model\ItemNotFoundException;
+use App\Models\Kassa;
 use App\Models\Kassir;
 
 class KassirController extends ControllerTwig
@@ -21,12 +22,14 @@ class KassirController extends ControllerTwig
     {
         if (isset($_POST['save'])) {
             $kassir = new Kassir();
+            $kassir->nomer_kassy = filter_input(INPUT_POST, 'nomer_kassy', FILTER_SANITIZE_NUMBER_INT);
             $kassir->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
             $kassir->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
             $kassir->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
             $kassir->save();
         }
-        $this->view->display('kassir/add.twig', []);
+        $kassas = Kassa::findAll();
+        $this->view->display('kassir/add.twig', ['kassas'=>$kassas]);
     }
 
     protected function actionEdit()
@@ -37,10 +40,12 @@ class KassirController extends ControllerTwig
                 throw new \InvalidArgumentException;
             }
             $kassir = Kassir::findById($id);
+            $kassas = Kassa::findAll();
         } catch (ItemNotFoundException $e) {
             throw new Http404Exception;
         }
         if (isset($_POST['save'])) {
+            $kassir->nomer_kassy = filter_input(INPUT_POST, 'nomer_kassy', FILTER_SANITIZE_NUMBER_INT);
             $kassir->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
             $kassir->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
             $kassir->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
@@ -48,7 +53,7 @@ class KassirController extends ControllerTwig
             header('Location:/kassir/');
             exit();
         }
-        $this->view->display('kassir/edit.twig', ['kassir'=>$kassir]);
+        $this->view->display('kassir/edit.twig', ['kassir'=>$kassir, 'kassas'=>$kassas]);
     }
 
     protected function actionDelete()

@@ -1,0 +1,85 @@
+{# edit.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Редактирование {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actBilet %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Редактировать билет</h1>
+        </div>
+        <form method="post">
+            <div class="mb-3 col-lg-4">
+                <label for="FormSelectShifrA" class="form-label">Авиакомпания</label>
+                <select class="form-select" id="FormSelectShifrA" aria-label="select_shifr_aviakompanii" name="shifr_aviakompanii" required>
+                    {% if aviakompaniyas %}
+                        {% for aviakompaniya in aviakompaniyas %}
+                            {% if aviakompaniya.id ==  bilet.nomer_kassy%}
+                                <option value="{{ aviakompaniya.id }}" selected>{{ aviakompaniya.nazvanie }} |
+                                    {{ aviakompaniya.naselennyj_punkt }}, {{ aviakompaniya.ulica }},
+                                    {{ aviakompaniya.nomer_doma }}, {{ aviakompaniya.ofis }}</option>
+                            {% else %}
+                                <option value="{{ aviakompaniya.id }}">{{ aviakompaniya.nazvanie }} |
+                                    {{ aviakompaniya.naselennyj_punkt }}, {{ aviakompaniya.ulica }},
+                                    {{ aviakompaniya.nomer_doma }}, {{ aviakompaniya.ofis }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope">Нет доступных авиакомпаний</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="FormSelectKassa" class="form-label">Касса</label>
+                <select class="form-select" id="FormSelectKassa" aria-label="select_kassa" name="nomer_kassy" required>
+                    {% if kassas %}
+                        {% for kassa in kassas %}
+                            {% if kassa.id ==  bilet.nomer_kassy%}
+                                <option selected value="{{ kassa.id }}">{{ kassa.naselennyj_punkt }}, {{ kassa.ulica }},
+                                    {{ kassa.nomer_doma }}</option>
+                            {% else %}
+                                <option value="{{ kassa.id }}">{{ kassa.naselennyj_punkt }}, {{ kassa.ulica }},
+                                    {{ kassa.nomer_doma }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope">Нет доступных касс</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="FormSelectKassir" class="form-label">Кассир</label>
+                <select class="form-select" id="FormSelectKassir" aria-label="select_kassir" name="tabelnyj_nomer_kassira" required>
+                    {% if kassirs %}
+                        {% for kassir in kassirs %}
+                            {% if kassa.id ==  bilet.tabelnyj_nomer_kassira%}
+                                <option value="{{ kassir.id }}" selected>{{ kassir.familiya }} {{ kassa.imya }}
+                                    {{ kassa.otchestvo }}</option>
+                            {% else %}
+                                <option value="{{ kassir.id }}">{{ kassir.familiya }} {{ kassa.imya }}
+                                    {{ kassa.otchestvo }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope">Нет доступных кассиров</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="FormSelectType" class="form-label">Тип</label>
+                <select class="form-select" id="FormSelectType" aria-label="select_type" name="tip" required>
+                    <option value="Экономический">Экономический</option>
+                    <option value="Бизнес">Бизнес</option>
+                    <option value="Первый">Первый</option>
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="FormControlData" class="form-label">Дата продажи</label>
+                <input type="date" name="data_prodazhi" class="form-control" id="FormControlData" value="{{ bilet.data_prodazhi }}" required>
+            </div>
+            <button type="input" name="save" class="btn btn-primary">Редактировать</button>
+        </form>
+    </main>
+{% endblock %}

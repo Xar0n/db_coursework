@@ -12,6 +12,19 @@
         </div>
         <form method="post">
             <div class="mb-3 col-lg-4">
+                <label for="FormSelectKassa" class="form-label">Касса</label>
+                <select class="form-select" id="FormSelectKassa" aria-label="select_kassa" name="nomer_kassy" required>
+                    {% if kassas %}
+                        {% for kassa in kassas %}
+                            <option value="{{ kassa.id }}">{{ kassa.naselennyj_punkt }}, {{ kassa.ulica }},
+                                {{ kassa.nomer_doma }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope">Нет доступных касс</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
                 <label for="exampleFormControlInput1" class="form-label">Фамилия</label>
                 <input type="text" name="familiya" class="form-control" id="exampleFormControlInput1" required min="1" max="255">
             </div>

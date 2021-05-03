@@ -1,17 +1,17 @@
 {# index.twig #}
 {% extends "layoutMain.twig" %}
-{% block title %} Кассиры {% endblock %}
+{% block title %} Билеты {% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
-{% block actKassir %}active{% endblock %}
+{% block actBilet %}active{% endblock %}
 {% block content %}
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Кассиры</h1>
+            <h1 class="h2">Билет</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a type="button" class="btn btn-sm btn-primary" href="/kassir/add">Добавить</a>
+                    <a type="button" class="btn btn-sm btn-primary" href="/bilet/add">Добавить</a>
                 </div>
             </div>
         </div>
@@ -19,29 +19,33 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th>Табельный номер</th>
+                    <th>Номер</th>
+                    <th>Авиакомпания</th>
                     <th>Касса</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
+                    <th>Кассир</th>
+                    <th>Тип</th>
+                    <th>Дата продажи</th>
+                    <th>Купоны</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% if kassirs %}
-                    {% for kassir in kassirs%}
+                {% if bilets %}
+                    {% for bilet in bilets%}
                         <tr>
-                            <td>{{ kassir.id }}</td>
-                            <td>{{ kassir.nomer_kassy }}</td>
-                            <td>{{ kassir.familiya }}</td>
-                            <td>{{ kassir.imya }}</td>
-                            <td>{{ kassir.otchestvo }}</td>
+                            <td>{{ bilet.id }}</td>
+                            <td>{{ bilet.shifr_aviakompanii }}</td>
+                            <td>{{ bilet.nomer_kassy }}</td>
+                            <td>{{ bilet.tabelnyj_nomer_kassira }}</td>
+                            <td>{{ bilet.tip }}</td>
+                            <td>{{ bilet.data_prodazhi }}</td>
+                            <td>купоны</td>
                             <td>
                                 <div class="btn-group">
-                                    <a class="nav-link" href="/kassir/edit/?id={{ kassir.id }}">
+                                    <a class="nav-link" href="/bilet/edit/?id={{ bilet.id }}">
                                         <span data-feather="edit"></span>
                                     </a>
-                                    <a class="nav-link" href="/kassir/delete/?id={{ kassir.id }}">
+                                    <a class="nav-link" href="/bilet/delete/?id={{ bilet.id }}">
                                         <span data-feather="x-square"></span>
                                     </a>
                                 </div>
