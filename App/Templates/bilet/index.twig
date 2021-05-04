@@ -25,7 +25,6 @@
                     <th>Кассир</th>
                     <th>Тип</th>
                     <th>Дата продажи</th>
-                    <th>Купоны</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -34,12 +33,14 @@
                     {% for bilet in bilets%}
                         <tr>
                             <td>{{ bilet.id }}</td>
-                            <td>{{ bilet.shifr_aviakompanii }}</td>
-                            <td>{{ bilet.nomer_kassy }}</td>
-                            <td>{{ bilet.tabelnyj_nomer_kassira }}</td>
+                            <td>{{ bilet.shifr_aviakompanii }} | {{ bilet.nazvanie_a }}; {{ bilet.naselennyj_punkt_a }},
+                                {{ bilet.ulica_a }}, {{ bilet.nomer_doma_a }}, {{ bilet.ofis_a }}</td>
+                            <td>{{ bilet.nomer_kassy }} | {{ bilet.naselennyj_punkt }}, {{ bilet.ulica }},
+                                {{ bilet.nomer_doma }}</td>
+                            <td>{{ bilet.tabelnyj_nomer_kassira }} | {{ bilet.familiya }} {{ bilet.imya }}
+                                {{ bilet.otchestvo }}</td>
                             <td>{{ bilet.tip }}</td>
                             <td>{{ bilet.data_prodazhi }}</td>
-                            <td>купоны</td>
                             <td>
                                 <div class="btn-group">
                                     <a class="nav-link" href="/bilet/edit/?id={{ bilet.id }}">

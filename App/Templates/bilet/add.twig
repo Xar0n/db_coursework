@@ -43,8 +43,8 @@
                 <select class="form-select" id="FormSelectKassir" aria-label="select_kassir" name="tabelnyj_nomer_kassira" required>
                     {% if kassirs %}
                         {% for kassir in kassirs %}
-                            <option value="{{ kassir.id }}">{{ kassir.familiya }} {{ kassa.imya }}
-                                {{ kassa.otchestvo }}</option>
+                            <option value="{{ kassir.id }}">{{ kassir.familiya }} {{ kassir.imya }}
+                                {{ kassir.otchestvo }}</option>
                         {% endfor %}
                     {% else %}
                         <option value="nope">Нет доступных кассиров</option>

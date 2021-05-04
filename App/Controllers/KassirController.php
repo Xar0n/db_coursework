@@ -14,7 +14,7 @@ class KassirController extends ControllerTwig
 {
     protected function actionIndex()
     {
-        $kassirs = Kassir::findAll();
+        $kassirs = Kassir::findAllRelated();
         $this->view->display('kassir/index.twig', ['kassirs' => $kassirs]);
     }
 

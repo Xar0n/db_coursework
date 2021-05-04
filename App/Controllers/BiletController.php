@@ -14,7 +14,7 @@ class BiletController extends ControllerTwig
 {
     protected function actionIndex()
     {
-        $bilets = Bilet::findAll();
+        $bilets = Bilet::findAllRelated();
         $this->view->display('bilet/index.twig', ['bilets' => $bilets]);
     }
 
