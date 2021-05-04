@@ -1,0 +1,67 @@
+{# edit.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Редактирование {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actKupon %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Редактировать купон</h1>
+        </div>
+        <form method="post">
+            <div class="mb-3 col-lg-8">
+                <label for="formSelectBilet" class="form-label">Билет</label>
+                <select class="form-select" id="formSelectBilet" aria-label="select_bilet" name="nomer_bileta" required>
+                    {% if bilets %}
+                        {% for bilet in bilets %}
+                            {% if bilet.id == kupon.nomer_bileta %}
+                                <option selected value="{{ bilet.id }}">{{ bilet.id }} | {{ bilet.nazvanie_a }}, {{ bilet.naselennyj_punkt_a }},
+                                    {{ bilet.ulica_a }}, {{ bilet.nomer_doma_a }}, {{ bilet.ofis_a }}; {{ bilet.tabelnyj_nomer_kassira }} | {{ bilet.familiya }} {{ bilet.imya }}
+                                    {{ bilet.otchestvo }}; {{ bilet.tip }}, {{ bilet.data_prodazhi }}</option>
+                            {% else %}
+                                <option value="{{ bilet.id }}">{{ bilet.id }} | {{ bilet.nazvanie_a }}, {{ bilet.naselennyj_punkt_a }},
+                                    {{ bilet.ulica_a }}, {{ bilet.nomer_doma_a }}, {{ bilet.ofis_a }}; {{ bilet.tabelnyj_nomer_kassira }} | {{ bilet.familiya }} {{ bilet.imya }}
+                                    {{ bilet.otchestvo }}; {{ bilet.tip }}, {{ bilet.data_prodazhi }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope" selected>Нет доступных билетов</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-8">
+                <label for="formSelectBilet" class="form-label">Клиент</label>
+                <select class="form-select" id="formSelectBilet" aria-label="select_bilet" name="nomer_i_seriya_pasporta_klienta" required>
+                    {% if klients %}
+                        {% for klient in klients %}
+                            {% if klient.nomer_i_seriya_pasporta == kupon.nomer_i_seriya_pasporta_klienta %}
+                                <option selected value="{{ klient.nomer_i_seriya_pasporta }}">{{ klient.nomer_i_seriya_pasporta }} |
+                                    {{ klient.familiya }} {{ klient.imya }} {{ klient.otchestvo }}</option>
+                            {% else %}
+                                <option value="{{ klient.nomer_i_seriya_pasporta }}">{{ klient.nomer_i_seriya_pasporta }} |
+                                    {{ klient.familiya }} {{ klient.imya }} {{ klient.otchestvo }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="nope" selected>Нет доступных клиентов</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Пункт посадки</label>
+                <input type="text" name="nunkt_posadki" class="form-control" id="exampleFormControlInput1" value="{{ kupon.nunkt_posadki }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Пункт высадки</label>
+                <input type="text" name="nunkt_vysadki" class="form-control" id="exampleFormControlInput1" value="{{ kupon.nunkt_vysadki }}" required min="1" max="255">
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label for="exampleFormControlInput1" class="form-label">Тариф(РУБ)</label>
+                <input type="number" name="tarif" class="form-control" id="exampleFormControlInput1" value="{{ kupon.tarif }}" required min="1">
+            </div>
+            <button type="input" name="save" class="btn btn-primary">Редактировать</button>
+        </form>
+    </main>
+{% endblock %}
