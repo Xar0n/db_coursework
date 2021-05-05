@@ -4,6 +4,8 @@
     "twig/twig": "2.7.*"
   },
   "require": {
-    "rakit/validation": "^1.4"
+    "rakit/validation": "^1.4",
+    "ozdemirburak/json-csv": "^0.4.0",
+    "ext-json": "*"
   }
 }

@@ -14,9 +14,12 @@
                 <label for="FormControlData" class="form-label">Дата продажи</label>
                 <input type="date" name="data_prodazhi" class="form-control" id="FormControlData" required>
             </div>
-            <button type="input" name="save" class="btn btn-primary">Показать</button>
+            <div class="btn-group">
+                <button type="input" name="save" class="btn btn-primary me-2">Показать</button>
+                <button type="input" name="report" class="btn btn-primary">Отчёт</button>
+            </div>
         </form>
-        {% if klients %}
+        {% if clients %}
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
@@ -33,23 +36,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for klient in klients %}
+                    {% for client in clients %}
                         <tr>
-                            <td>{{ klient.nomer_i_seriya_pasporta }}</td>
-                            <td>{{ klient.familiya }}</td>
-                            <td>{{ klient.imya }}</td>
-                            <td>{{ klient.otchestvo }}</td>
-                            <td>{{ klient.shifr_aviakompanii }} | {{ klient.nazvanie }}; {{ klient.naselennyj_punkt }},
-                                {{ klient.ulica }}, {{ klient.nomer_doma }}, {{ klient.ofis }}</td>
-                            <td>{{ klient.nunkt_posadki }}</td>
-                            <td>{{ klient.nunkt_vysadki }}</td>
-                            <td>{{ klient.tip }}</td>
-                            <td>{{ klient.data_prodazhi }}</td>
+                            <td>{{ client.nomer_i_seriya_pasporta }}</td>
+                            <td>{{ client.familiya }}</td>
+                            <td>{{ client.imya }}</td>
+                            <td>{{ client.otchestvo }}</td>
+                            <td>{{ client.shifr_aviakompanii }} | {{ client.nazvanie }}; {{ client.naselennyj_punkt }},
+                                {{ client.ulica }}, {{ client.nomer_doma }}, {{ client.ofis }}</td>
+                            <td>{{ client.nunkt_posadki }}</td>
+                            <td>{{ client.nunkt_vysadki }}</td>
+                            <td>{{ client.tip }}</td>
+                            <td>{{ client.data_prodazhi }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        {% endif %}
+        {% if nope %}
+            <div class="alert alert-warning mt-3" role="alert">
+                Нет результатов
+            </div>
         {% endif %}
     </main>
 {% endblock %}

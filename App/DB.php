@@ -53,7 +53,7 @@ class DB
         try {
             $sth = $this->dbh->prepare($sql);
             $sth->execute($params);
-            return $sth->fetchAll();
+            return $sth->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new DbPrepareException;
         }
