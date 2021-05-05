@@ -45,6 +45,20 @@ class DB
 		}
 	}
 
+    public function querySimple(
+        string $sql,
+        array $params = []
+    )
+    {
+        try {
+            $sth = $this->dbh->prepare($sql);
+            $sth->execute($params);
+            return $sth->fetchAll();
+        } catch (\PDOException $e) {
+            throw new DbPrepareException;
+        }
+    }
+
 	public function queryEach(
 		string $sql,
 		array $params = [],
