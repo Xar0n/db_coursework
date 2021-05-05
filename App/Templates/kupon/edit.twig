@@ -63,5 +63,10 @@
             </div>
             <button type="input" name="save" class="btn btn-primary">Редактировать</button>
         </form>
+        {% if overflow %}
+            <div class="alert alert-warning mt-3" role="alert">
+                Билет уже содержит 4 купона
+            </div>
+        {% endif %}
     </main>
 {% endblock %}
