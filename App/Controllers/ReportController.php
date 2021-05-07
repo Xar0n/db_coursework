@@ -12,7 +12,22 @@ class ReportController extends ControllerTwig
 {
     protected function actionGeneralSales()
     {
-        debug(Report::generalSales());
+        $sales = Report::generalSales();
+        if (isset($_POST['report'])) {
+            $salesRep = array_map(function($sale) {
+                return array(
+                    'Шифр авиакомпании' => $sale['shifr_aviakompanii'],
+                    'Название авиакомпании' => $sale['nazvanie'],
+                    'Населенный пункт авиакомпании' => $sale['naselennyj_punkt'],
+                    'Улица авиакомпании' => $sale['ulica'],
+                    'Номер дома авиакомпании' => $sale['nomer_doma'],
+                    'Офис авиакомпании' => $sale['ofis'],
+                    'Сумма продаж' => $sale['sum_sales'],
+                );
+            }, $sales);
+            arr_to_csv($salesRep, 'Общая сумма от продаж билетов каждой авиакомпании');
+        }
+        $this->view->display('report/generalSales.twig', ['sales' => $sales]);
     }
 
     protected function actionListClientsOnDate()
@@ -42,7 +57,7 @@ class ReportController extends ControllerTwig
                         'Дата продажи билета' => $client['data_prodazhi']
                     );
                 }, $clients);
-                arr_to_csv($clientsRep, 'report2');
+                arr_to_csv($clientsRep, 'Список клиентов авиакомпаний на заданную дату');
             }
 
         }
@@ -79,7 +94,7 @@ class ReportController extends ControllerTwig
                         'Дата продажи билета' => $bilet['data_prodazhi']
                     );
                 }, $bilets);
-                arr_to_csv($biletsRep, 'report3');
+                arr_to_csv($biletsRep, 'Билеты проданные за указанный месяц указанной авиакомпании');
             }
         }
         $aviakompaniyas = Aviakompaniya::findAll();

@@ -7,8 +7,25 @@ class Report extends Request
 {
     public static function generalSales()
     {
-        $sql = 'SELECT * FROM `kupon`';
-        return self::request($sql);
+        $sql = 'SELECT bilet.shifr_aviakompanii, aviakompaniya.nazvanie, aviakompaniya.naselennyj_punkt, aviakompaniya.ulica, 
+        aviakompaniya.nomer_doma, aviakompaniya.ofis, (SELECT SUM(kupon.tarif) FROM kupon WHERE  bilet.id = kupon.nomer_bileta 
+        AND aviakompaniya.id = bilet.shifr_aviakompanii) AS sum_sales FROM `bilet`, `kupon`, `aviakompaniya` WHERE bilet.id = kupon.nomer_bileta 
+        AND aviakompaniya.id = bilet.shifr_aviakompanii GROUP BY bilet.id';
+        $results = self::request($sql);
+        $sum = [];
+        $exist = [];
+        $new = [];
+        foreach ($results as $result) {
+            $sum[$result['shifr_aviakompanii']] = $sum[$result['shifr_aviakompanii']] + $result['sum_sales'];
+        }
+        foreach ($results as $result) {
+            if ($exist[$result['shifr_aviakompanii']] == false ) {
+                $exist[$result['shifr_aviakompanii']] = true;
+                $result['sum_sales'] = $sum[$result['shifr_aviakompanii']];
+                $new[] = $result;
+            }
+        }
+        return $new;
     }
 
     public static function listClientsOnDate($date)
@@ -31,6 +48,4 @@ class Report extends Request
                                           AND bilet.tabelnyj_nomer_kassira = kassir.id';
         return self::request($sql);
     }
-
-
 }

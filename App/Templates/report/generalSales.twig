@@ -1,0 +1,57 @@
+{# generalSales.twig #}
+{% extends "layoutMain.twig" %}
+{% block title %} Отчет {% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block actRep2 %}active{% endblock %}
+{% block content %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Общая сумма от продаж билетов каждой авиакомпании</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    <form method="post">
+                        <button type="input" name="report" class="btn btn-primary">Отчёт</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if sales %}
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>Шифр</th>
+                        <th>Название</th>
+                        <th>Населенный пункт</th>
+                        <th>Улица</th>
+                        <th>Номер дома</th>
+                        <th>Офис</th>
+                        <th>Сумма продаж</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sale in sales %}
+                        <tr>
+                            <td>{{ sale.shifr_aviakompanii }}
+                            <td>{{ sale.nazvanie }}</td>
+                            <td>{{ sale.naselennyj_punkt }}</td>
+                            <td>{{ sale.ulica }}</td>
+                            <td>{{ sale.nomer_doma }}</td>
+                            <td>{{ sale.ofis }}</td>
+                            <td>{{ sale.sum_sales }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        {% if nope %}
+            <div class="alert alert-warning mt-3" role="alert">
+                Нет результатов
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}
