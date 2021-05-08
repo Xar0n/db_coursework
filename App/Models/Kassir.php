@@ -21,4 +21,11 @@ class Kassir extends Model
         $sql = 'SELECT kassir.*, kassa.naselennyj_punkt, kassa.ulica, kassa.nomer_doma FROM `kassir`, `kassa` WHERE kassir.nomer_kassy = kassa.id ';
         return $db->query($sql, [], static::class);
     }
+
+    public static function kassirsToKassa($idKassa)
+    {
+        $db = new DB();
+        $sql = 'SELECT * FROM `kassir` WHERE nomer_kassy = '.$idKassa;
+        return $db->query($sql, [], static::class);
+    }
 }
