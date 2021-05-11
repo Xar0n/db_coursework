@@ -70,8 +70,8 @@ class ReportController extends ControllerTwig
         $nope = false;
         $bilets = [];
         if(isset($_POST['show']) | isset($_POST['report'])) {
-            $shifr_aviakompanii = filter_input(INPUT_POST, 'shifr_aviakompanii', FILTER_SANITIZE_NUMBER_INT);
-            $month = filter_input(INPUT_POST, 'month', FILTER_SANITIZE_NUMBER_INT);
+            $shifr_aviakompanii = filter_input(INPUT_POST, 'shifr_aviakompanii', FILTER_VALIDATE_INT);
+            $month = filter_input(INPUT_POST, 'month', FILTER_VALIDATE_INT);
             $bilets = Report::salesMonthSelectCompany($shifr_aviakompanii, $month);
             if (isset($_POST['show']) and empty($bilets)) $nope = true;
             if (isset($_POST['report'])) {

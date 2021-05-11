@@ -6,9 +6,17 @@ namespace App\Controllers;
 
 use App\ControllerTwig;
 use App\Models\Aviakompaniya;
+use App\Validators\AviakompaniyaValidator;
 
 class AviakompaniyaController extends ControllerTwig
 {
+    protected $validator;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->validator = new AviakompaniyaValidator();
+    }
+
     protected function actionIndex()
     {
         $aviakompaniyas = Aviakompaniya::findAll();
@@ -17,20 +25,25 @@ class AviakompaniyaController extends ControllerTwig
 
     protected function actionAdd()
     {
+        $errors = [];
         if (isset($_POST['save'])) {
-            $aviakompaniya = new Aviakompaniya();
-            $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
-            $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
-            $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
-            $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
-            $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
-            $aviakompaniya->save();
+            $this->validator->inputRules();
+            if(!$this->validator->getResultBool()) {
+                $aviakompaniya = new Aviakompaniya();
+                $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
+                $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
+                $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
+                $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
+                $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
+                $aviakompaniya->save();
+            } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
-        $this->view->display('aviakompaniya/add.twig', []);
+        $this->view->display('aviakompaniya/add.twig', ['errors' => $errors]);
     }
 
     protected function actionEdit()
     {
+        $errors = [];
         try {
             $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
             if (empty($id)) {
@@ -41,16 +54,19 @@ class AviakompaniyaController extends ControllerTwig
             throw new Http404Exception;
         }
         if (isset($_POST['save'])) {
-            $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
-            $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
-            $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
-            $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
-            $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
-            $aviakompaniya->save();
-            header('Location:/aviakompaniya/');
-            exit();
+            $this->validator->inputRules();
+            if(!$this->validator->getResultBool()) {
+                $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
+                $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
+                $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
+                $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
+                $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
+                $aviakompaniya->save();
+                header('Location:/aviakompaniya/');
+                exit();
+            } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
-        $this->view->display('aviakompaniya/edit.twig', ['aviakompaniya'=>$aviakompaniya]);
+        $this->view->display('aviakompaniya/edit.twig', ['aviakompaniya'=>$aviakompaniya, 'errors' => $errors]);
     }
 
     protected function actionDelete()

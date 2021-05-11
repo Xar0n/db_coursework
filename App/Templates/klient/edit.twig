@@ -29,5 +29,12 @@
             </div>
             <button type="input" name="save" class="btn btn-primary">Редактировать</button>
         </form>
+        {% if errors %}
+            {% for error in errors %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </main>
 {% endblock %}

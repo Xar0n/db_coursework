@@ -3,7 +3,7 @@ namespace App\Validators;
 
 use App\ValidatorF;
 
-class ValidatorKlient extends ValidatorF
+class KlientValidator extends ValidatorF
 {
     public function inputRules()
     {

@@ -4,7 +4,7 @@
 namespace App\Controllers;
 use App\ControllerTwig;
 use App\Models\Klient;
-use App\Validators\ValidatorKlient;
+use App\Validators\KlientValidator;
 
 class KlientController extends ControllerTwig
 {
@@ -12,7 +12,7 @@ class KlientController extends ControllerTwig
     public function __construct()
     {
         parent::__construct();
-        $this->validator = new ValidatorKlient();
+        $this->validator = new KlientValidator();
     }
 
     protected function actionIndex()
@@ -40,6 +40,7 @@ class KlientController extends ControllerTwig
 
     protected function actionEdit()
     {
+        $errors = [];
         try {
             $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
             if (empty($id)) {
@@ -50,15 +51,18 @@ class KlientController extends ControllerTwig
             throw new Http404Exception;
         }
         if (isset($_POST['save'])) {
-            $klient->nomer_i_seriya_pasporta = filter_input(INPUT_POST, 'nomer_i_seriya_pasporta', FILTER_SANITIZE_STRING);
-            $klient->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
-            $klient->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
-            $klient->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
-            $klient->save();
-            header('Location:/klient/');
-            exit();
+            $this->validator->inputRules();
+            if(!$this->validator->getResultBool()) {
+                $klient->nomer_i_seriya_pasporta = filter_input(INPUT_POST, 'nomer_i_seriya_pasporta', FILTER_SANITIZE_STRING);
+                $klient->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
+                $klient->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
+                $klient->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
+                $klient->save();
+                header('Location:/klient/');
+                exit();
+            } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
-        $this->view->display('klient/edit.twig', ['klient'=>$klient]);
+        $this->view->display('klient/edit.twig', ['klient'=>$klient, 'errors' => $errors]);
     }
 
     protected function actionDelete()
