@@ -41,6 +41,7 @@ class ReportController extends ControllerTwig
             if (isset($_POST['report'])) {
                 $clientsRep = array_map(function($client) {
                     return array(
+                        'Серия и номер паспорта клиента' => $client['nomer_i_seriya_pasporta'],
                         'Фамилия клиента' => $client['familiya'],
                         'Имя клиента' => $client['imya'],
                         'Отчетство клиента' => $client['otchestvo'],

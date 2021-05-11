@@ -4,9 +4,17 @@
 namespace App\Controllers;
 use App\ControllerTwig;
 use App\Models\Klient;
+use App\Validators\ValidatorKlient;
 
 class KlientController extends ControllerTwig
 {
+    protected $validator;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->validator = new ValidatorKlient();
+    }
+
     protected function actionIndex()
     {
         $klient = Klient::findAll();
@@ -15,15 +23,19 @@ class KlientController extends ControllerTwig
 
     protected function actionAdd()
     {
+        $errors = [];
         if (isset($_POST['save'])) {
-            $klient = new Klient();
-            $klient->nomer_i_seriya_pasporta = filter_input(INPUT_POST, 'nomer_i_seriya_pasporta', FILTER_SANITIZE_STRING);
-            $klient->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
-            $klient->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
-            $klient->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
-            $klient->save();
+            $this->validator->inputRules();
+            if(!$this->validator->getResultBool()) {
+                $klient = new Klient();
+                $klient->nomer_i_seriya_pasporta = filter_input(INPUT_POST, 'nomer_i_seriya_pasporta', FILTER_SANITIZE_NUMBER_INT);
+                $klient->familiya = filter_input(INPUT_POST, 'familiya', FILTER_SANITIZE_STRING);
+                $klient->imya = filter_input(INPUT_POST, 'imya', FILTER_SANITIZE_STRING);
+                $klient->otchestvo = filter_input(INPUT_POST, 'otchestvo', FILTER_SANITIZE_STRING);
+                $klient->save();
+            } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
-        $this->view->display('klient/add.twig', []);
+        $this->view->display('klient/add.twig', ['errors' => $errors]);
     }
 
     protected function actionEdit()

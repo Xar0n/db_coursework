@@ -13,7 +13,7 @@
         <form method="post">
             <div class="mb-3 col-lg-4">
                 <label for="exampleFormControlInput1" class="form-label">Серия и номер паспорта</label>
-                <input type="text" name="nomer_i_seriya_pasporta" class="form-control" id="exampleFormControlInput1" required min="1" max="10">
+                <input type="number" name="nomer_i_seriya_pasporta" class="form-control" id="exampleFormControlInput1" required min="0">
             </div>
             <div class="mb-3 col-lg-4">
                 <label for="exampleFormControlInput1" class="form-label">Фамилия</label>
@@ -29,5 +29,12 @@
             </div>
             <button type="input" name="save" class="btn btn-primary">Добавить</button>
         </form>
+        {% if errors %}
+            {% for error in errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </main>
 {% endblock %}
