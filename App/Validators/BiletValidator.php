@@ -11,9 +11,9 @@ class BiletValidator extends ValidatorF
     public function inputRules()
     {
         $this->validate($_POST, [
-            'shifr_aviakompanii' => 'required|integer',
-            'nomer_kassy' => 'required|integer',
-            'tabelnyj_nomer_kassira' => 'required|integer',
+            'shifr_aviakompanii' => 'required|numeric',
+            'nomer_kassy' => 'required|numeric',
+            'tabelnyj_nomer_kassira' => 'required|numeric',
             'tip' => 'required|min:1|max:255',
             'data_prodazhi' => 'required|date',
         ]);

@@ -29,13 +29,16 @@ class AviakompaniyaController extends ControllerTwig
         if (isset($_POST['save'])) {
             $this->validator->inputRules();
             if(!$this->validator->getResultBool()) {
-                $aviakompaniya = new Aviakompaniya();
-                $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
-                $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
-                $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
-                $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
-                $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
-                $aviakompaniya->save();
+                $nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
+                if(Aviakompaniya::uniqueNazvanie($nazvanie)) {
+                    $aviakompaniya = new Aviakompaniya();
+                    $aviakompaniya->nazvanie = $nazvanie;
+                    $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->save();
+                } else $errors[] = 'Название авиакомпании не уникально';
             } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
         $this->view->display('aviakompaniya/add.twig', ['errors' => $errors]);
@@ -56,14 +59,17 @@ class AviakompaniyaController extends ControllerTwig
         if (isset($_POST['save'])) {
             $this->validator->inputRules();
             if(!$this->validator->getResultBool()) {
-                $aviakompaniya->nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
-                $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
-                $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
-                $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
-                $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
-                $aviakompaniya->save();
-                header('Location:/aviakompaniya/');
-                exit();
+                $nazvanie = filter_input(INPUT_POST, 'nazvanie', FILTER_SANITIZE_STRING);
+                if(Aviakompaniya::uniqueNazvanie($nazvanie)) {
+                    $aviakompaniya->nazvanie = $nazvanie;
+                    $aviakompaniya->naselennyj_punkt = filter_input(INPUT_POST, 'naselennyj_punkt', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->ulica = filter_input(INPUT_POST, 'ulica', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->nomer_doma = filter_input(INPUT_POST, 'nomer_doma', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->ofis = filter_input(INPUT_POST, 'ofis', FILTER_SANITIZE_STRING);
+                    $aviakompaniya->save();
+                    header('Location:/aviakompaniya/');
+                    exit();
+                } else $errors[] = 'Название авиакомпании не уникально';
             } else $errors = $this->validator->getResultErrors()->firstOfAll();
         }
         $this->view->display('aviakompaniya/edit.twig', ['aviakompaniya'=>$aviakompaniya, 'errors' => $errors]);
